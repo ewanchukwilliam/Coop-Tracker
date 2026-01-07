@@ -25,11 +25,12 @@ DROP TABLE IF EXISTS `applications`;
 CREATE TABLE `applications` (
   `id` int NOT NULL AUTO_INCREMENT,
   `date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `title` varchar(255) DEFAULT NULL,
+  `title` varchar(255) NOT NULL,
   `description` text,
-  `company` varchar(255) DEFAULT NULL,
+  `company` varchar(255) NOT NULL,
   `location` varchar(255) DEFAULT NULL,
   `offer` varchar(255) DEFAULT NULL,
+  `userid` char(36) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -70,6 +71,36 @@ CREATE TABLE `exportable` (
 LOCK TABLES `exportable` WRITE;
 /*!40000 ALTER TABLE `exportable` DISABLE KEYS */;
 /*!40000 ALTER TABLE `exportable` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `users` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `login_token` varchar(1024) DEFAULT NULL,
+  `refresh_token` varchar(1024) DEFAULT NULL,
+  `unique_id` char(36) DEFAULT (uuid()),
+  PRIMARY KEY (`id`),
+  CONSTRAINT `unique_username` UNIQUE (`username`),
+  CONSTRAINT `unique_email` UNIQUE (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users`
+--
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

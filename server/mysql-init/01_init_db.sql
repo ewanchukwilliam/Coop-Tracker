@@ -1,5 +1,5 @@
 CREATE DATABASE IF NOT EXISTS JobHunting;
-USE JobHunting
+USE JobHunting;
 CREATE TABLE IF NOT EXISTS applications (
     id INT AUTO_INCREMENT PRIMARY KEY,
     date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -13,10 +13,12 @@ CREATE TABLE IF NOT EXISTS applications (
 
 CREATE TABLE IF NOT EXISTS users (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(255) NOT NULL UNIQUE,
+    username VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL,
     login_token VARCHAR(1024),
     refresh_token VARCHAR(1024),
-    unique_id CHAR(36) DEFAULT uuid() COMMENT 'DEFAULT_GENERATED',
+    unique_id CHAR(36) DEFAULT (UUID()),
+    CONSTRAINT unique_username UNIQUE (username),
+    CONSTRAINT unique_email UNIQUE (email)
 );
